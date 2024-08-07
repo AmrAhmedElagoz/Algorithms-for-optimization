@@ -1,3 +1,5 @@
+# Derivative
+
 Here we are discussing derivatives and their generalization to multiple dimensions. 
 
 Derivatives are used in many algorithms to inform the choice of direction of the search for an optimum. 
@@ -61,6 +63,8 @@ Consider a function $f(x, y) = x^2 + y^2$.
 
 In essence, the gradient helps you understand the "slope" of a function in multiple dimensions, guiding you in the direction of the steepest ascent.
 
+## Derivatives in Multiple Dimensions
+
 The Hessian of a multivariate function is a matrix containing all of the second
 derivatives with respect to the input. 
 
@@ -75,4 +79,7 @@ $H(\mathbf{x}) = \begin{bmatrix}
 \frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_n^2}
 \end{bmatrix}$
 
+#  Numerical Differentiation
+The process of estimating derivatives numerically is referred to as numerical
+differentiation. Estimates can be derived in different ways from function evaluations
 
