@@ -13,13 +13,15 @@ The derivative $f'(x)$ of a function f of a single variable $x$ is the rate at w
 </div>
 
 # Understanding the Gradient
-We can use the derivative to provide a linear approximation of the fucntion near $x$: $f(x + \Delta x) \approx f(x) + f'(x) \Delta x$
+We can use the derivative to provide a linear approximation (tangent line approximation) of the fucntion near $x$: $f(x + \Delta x) \approx f(x) + f'(x) \Delta x$
 
 The derivative is the ratio between the changes in $f$ and the change in $x$ at the point $x$:
 $f'(x) = \frac{\Delta f(x)}{\Delta x}$
 
 which is the change in $f(x)$ divided by the change in $x$ as the step $h$ becomes infinitely small:
-![derivative](..\assets\FIG2.png)
+<div style="text-align: center;">
+    <img src="..\assets\FIG2.png" alt="Derivative" width="1000">
+</div>
 
 ## Single Variable vs. Multiple Variables
 
@@ -77,6 +79,8 @@ derivatives with respect to the input.
 
 The second derivatives capture information about the local curvature of the function.
 
+In optimization, the goal is often to find the minimum or maximum of a function $f(x)$. For functions of multiple variables, the behavior near critical points (where the gradient $\nabla f(x)=0$) is crucial. The Hessian matrix, which contains all the second-order partial derivatives of $f$, provides information about the curvature of the function around these critical points.
+
 The Hessian matrix $H(\mathbf{x})$ of a function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is defined as:
 
 $H(\mathbf{x})$ = $\begin{bmatrix}
@@ -86,19 +90,97 @@ $H(\mathbf{x})$ = $\begin{bmatrix}
 \frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} & \cdots & \frac{\partial^2 f}{\partial x_n^2}
 \end{bmatrix}$
 
-#  Numerical Differentiation
+# Compute the Derivative
+
+Computing derivatives is a fundamental concept in calculus, and there are several methods used to compute them, depending on the context and the function in question. 
+
+## 1. Analytical Differentiation (Symbolic Differentiation)
+Analytical differentiation involves applying calculus rules to obtain an exact expression for the derivative. This method is suitable for functions that can be expressed explicitly and manipulated algebraically.
+
+- **Power Rule**: $\frac{d}{dx}x^n = nx^{n-1}$
+- **Product Rule**: $\frac{d}{dx}[u(x) \cdot v(x)] = u'(x) \cdot v(x) + u(x) \cdot v'(x)$
+- **Quotient Rule**: $\frac{d}{dx}\left[\frac{u(x)}{v(x)}\right] = \frac{u'(x) \cdot v(x) - u(x) \cdot v'(x)}{v(x)^2}$
+- **Chain Rule**: $\frac{d}{dx}f(g(x)) = f'(g(x)) \cdot g'(x)$
+
+Analytical differentiation provides exact results, but it can become complex when dealing with higher-order derivatives or intricate functions.
+
+### Use Cases:
+
+- Mathematical Analysis: When an explicit expression of the function is known, and exact derivatives are required.
+
+- Theoretical Work: In fields like physics, engineering, and economics, where precise analytical expressions are necessary for further theoretical development.
+
+- Computer Algebra Systems: Used in software like Mathematica, Maple, or SymPy for symbolic computation.
+
+### Advantages:
+- Exact Results: Provides precise and exact derivatives, which are essential for rigorous mathematical proofs and theoretical work.
+
+- No Approximation Errors: Unlike numerical methods, there are no errors due to approximation.
+
+### Disadvantages:
+- Complexity: For complex functions, especially those involving many variables or higher-order derivatives, the expressions can become extremely complicated.
+
+- Not Always Feasible: Some functions cannot be differentiated analytically (e.g., those involving special functions or implicit definitions).
+
+## 2. Numerical Differentiation
 The process of estimating derivatives numerically is referred to as numerical differentiation. Estimates can be derived in different ways from function evaluations.
 
-## Finite difference method
-As the name implies, finite difference methods compute the difference between two values that differ by a finite step size. They approximate the derivative definitions using small differences:
-![Mathematically, the smaller the step size h, the better the derivative estimate.](..\assets\EQ1.png)
+Numerical differentiation is used when an analytical solution is difficult to obtain or when the function is known only at discrete points. It approximates the derivative using finite differences.
 
-## Complex step
+- **Finite Difference Method**: Approximates the derivative using discrete data points.
+  - **Forward Difference**: $\frac{f(x+h) - f(x)}{h}$
+  - **Backward Difference**: $\frac{f(x) - f(x-h)}{h}$
+  - **Central Difference**: $\frac{f(x+h) - f(x-h)}{2h}$
+- **Higher-order Approximations**: Involve more terms for better accuracy.
+
+### Finite Difference Method
+As the name implies, finite difference methods compute the difference between two values that differ by a finite step size. They approximate the derivative definitions using small differences:
+<div style="text-align: center;">
+    <img src="..\assets\EQ1.png" alt="Mathematically, the smaller the step size h, the better the derivative estimate" width="1000">
+</div>
+
+
+### Use Cases:
+- Scientific Computing: Where functions are known only at discrete points (e.g., experimental data) or are too complex for analytical differentiation.
+
+- Engineering Applications: Common in simulations where only sampled data is available, such as in finite element analysis.
+
+- Real-time Systems: Used when quick approximations are needed, and exact derivatives are not crucial.
+
+### Advantages:
+- Simplicity: Easy to implement, especially when dealing with discrete data or when the function is not known analytically.
+
+- Applicability: Can be used for any function, regardless of complexity, as long as data points are available.
+
+- Flexibility: Useful for functions that are piecewise or defined by a set of discrete data.
+
+### Disadvantages:
+
+- Approximation Errors: Numerical methods introduce truncation and round-off errors, which can accumulate, especially for higher-order derivatives.
+
+- Accuracy Depends on Step Size: Smaller step sizes improve accuracy but can also increase computational cost and the risk of numerical instability.
+
+- Limited Precision: May not be suitable for problems requiring very high precision.
+
+### Complex step
 Which is a powerful technique to compute derivatives with high accuracy while avoiding the issue of subtractive cancellation that plagues traditional finite difference methods.
 
-### How the Complex Step Method Works
+#### How the Complex Step Method Works
 
 The key idea behind the complex step method is to use a complex step instead of a real step to compute the derivative. This method takes advantage of the fact that in complex arithmetic, the imaginary part can be isolated without the subtraction that causes cancellation errors.
 
 For a given function $f(x)$, the derivative at a point $x$ can be approximated using the complex step method as:
-![EQ](..\assets\EQ2.png)
+<div style="text-align: center;">
+    <img src="..\assets\EQ2.png" alt="EQ2" width="300">
+</div>
+
+### 3. Automatic Differentiation (Autodiff)
+
+Automatic differentiation is a computational technique used in machine learning and scientific computing. It computes derivatives efficiently and accurately by breaking down complex functions into a sequence of elementary operations.
+
+- **Forward Mode**: Computes derivatives alongside function evaluation by propagating the derivative information through each operation. It's efficient when the number of inputs is small compared to the number of outputs. for example, it's useful in evaluating gradients for optimization problems with fewer variables.
+
+- **Reverse Mode**: Computes derivatives by first evaluating the function and then propagating the derivatives backward from the output to the inputs. This is the basis for backpropagation in neural networks it's ideal for scenarios where there are many inputs and a single output, such as in training deep learning models.
+
+Autodiff provides exact derivatives up to machine precision and is automated, requiring no manual derivative calculations.
+
