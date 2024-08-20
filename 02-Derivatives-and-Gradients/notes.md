@@ -180,7 +180,39 @@ Automatic differentiation is a computational technique used in machine learning 
 
 - **Forward Mode**: Computes derivatives alongside function evaluation by propagating the derivative information through each operation. It's efficient when the number of inputs is small compared to the number of outputs. for example, it's useful in evaluating gradients for optimization problems with fewer variables.
 
+- How it Works
+  - Initialization: Start with the input variable for which you want the derivative. Initialize the derivative of this variable to 1 and all others to 0.
+
+  - Propagation: As you evaluate the function step by step, propagate the derivative information using the chain rule.
+
+  - Final Derivative: The final value gives the derivative of the output with respect to the chosen input variable.
+
 - **Reverse Mode**: Computes derivatives by first evaluating the function and then propagating the derivatives backward from the output to the inputs. This is the basis for backpropagation in neural networks it's ideal for scenarios where there are many inputs and a single output, such as in training deep learning models.
+
+- How it Works
+  - Initialization: Start by evaluating the function, keeping track of all intermediate results.
+
+  - Backward Propagation: After the forward pass, initialize the derivative of the output with respect to itself to 1. Then propagate this derivative information backward to all input variables using the chain rule.
+
+  - Final Derivatives: The final values give the derivatives of the output with respect to each input variable.
 
 Autodiff provides exact derivatives up to machine precision and is automated, requiring no manual derivative calculations.
 
+### Use Cases:
+- Machine Learning: Essential in training neural networks where gradients are required for optimization (backpropagation).
+
+- Scientific Computing: Used in optimization problems where gradients need to be computed repeatedly.
+
+- Robotics and Control Systems: For real-time applications where derivatives of functions governing the system dynamics are needed.
+
+### Advantages:
+- Efficiency: Combines the accuracy of analytical differentiation with the flexibility of numerical differentiation, offering precise derivatives with minimal computational overhead.
+
+- Automation: Automatically handles complex functions, including those with loops and conditionals, without needing manual intervention.
+
+- Scalability: Scales well for large, complex functions, making it ideal for high-dimensional problems.
+
+### Disadvantages:
+- Complex Implementation: While automatic differentiation is highly efficient, it can be complex to implement from scratch. However, many libraries like TensorFlow, PyTorch, and JAX offer built-in support.
+
+- Memory Consumption: Reverse mode autodiff, in particular, can consume a lot of memory, especially for large computational graphs.
